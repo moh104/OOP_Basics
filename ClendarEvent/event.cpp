@@ -37,6 +37,31 @@ void Event::print() const noexcept
     cout << "------------------------\n";
 }
 
+void Event::set_name(const string& i_name)
+{
+    if (i_name.empty())
+    {
+        throw invalid_argument("Event name cannot be empty.");
+    }
+    name = i_name;
+}
+
+void Event::validationTimes(time_t i_start , time_t i_end) const
+{
+    if (i_start >= i_end)
+    {
+        throw invalid_argument("Start time must be earlier than end time.");
+    }
+    if (i_start <= time(nullptr))
+    {
+        throw invalid_argument("Start time must be in the future.");
+    }
+    if (i_end <= time(nullptr))
+    {
+        throw invalid_argument("End time must be in the future.");
+    }
+}
+
 Event::~Event() noexcept
 {
     cout << "Event '" << name << "' has been deleted.\n";
