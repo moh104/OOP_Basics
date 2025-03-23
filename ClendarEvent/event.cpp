@@ -24,6 +24,19 @@ time_t Event::get_end() const noexcept
     return end;
 }
 
+bool Event::isExpired() const noexcept
+{
+    return end < time(nullptr);
+}
+
+void Event::print() const noexcept
+{
+    cout << "Event: " << name << "\n";
+    cout << "Start time: " << ctime(&start);
+    cout << "End time: " << ctime(&end);
+    cout << "------------------------\n";
+}
+
 Event::~Event() noexcept
 {
     cout << "Event '" << name << "' has been deleted.\n";
