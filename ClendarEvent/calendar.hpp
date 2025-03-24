@@ -11,7 +11,6 @@ class Calendar
 
         void add_event(const std::string& , time_t , time_t );
         void refresh() noexcept;
-
         void printEvents() const noexcept;
         void findEvent(time_t) const noexcept;
 
