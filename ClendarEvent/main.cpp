@@ -63,3 +63,64 @@ void menu() noexcept
 
     return timeResult;
 }
+
+int main()
+{
+    cout << "Enter your name (name can be empty): ";
+    string owner;
+    getline(cin , owner);
+    Calendar calendar(owner);
+    string strChoice;
+
+    while (true)
+    {
+        try
+        {
+            cout << "Enter command number(enter 5 to see the command menu): ";
+            getline(cin , strChoice);
+            int choice{isIntNumber(strChoice)};
+        
+            if (choice == 1)
+            {
+                cout << "Event name: ";
+                string name;
+                getline(cin , name);
+                time_t start{input_time("Start time: ")};
+                time_t end{input_time("End time: ")};
+                calendar.add_event(name , start , end);
+            }
+            else if (choice == 2)
+            {
+                calendar.refresh();
+            }
+            else if (choice == 3)
+            {
+                calendar.printEvents();
+            }
+            else if (choice == 4)
+            {
+                time_t time{input_time("Specific time: ")};
+                calendar.findEvent(time);
+            }
+            else if(choice == 5)
+            {
+                menu();
+            }
+            else if (choice == 6)
+            {
+                std::cout << "Exit the program.\n";
+                break;
+            }
+            else
+            {
+                cerr << "Invalid choice.\n";
+            }
+        }
+        catch(const invalid_argument& e)
+        {
+            cerr << "(ERROR)" << e.what() << '\n';
+        }
+    }
+
+    return 0;
+}
