@@ -4,6 +4,36 @@
 
 using namespace std;
 
+int get_intNumber(const string& output)
+{
+    string input;
+    int value;
+    
+    while (true)
+    {
+        cout << output;
+        getline(cin , input);
+        try
+        {
+            size_t pos = 0;
+            value = stoi(input , &pos);
+    
+            if (pos == input.size())
+            {
+                return value;
+            }
+            else
+            {
+                cout << "Invalid input! Please enter only a integer number without extra characters.\n";
+            }
+        }
+        catch(...)
+        {
+            cout << "Invalid input! Please enter a valid integer number.\n";
+        }
+    }
+}
+
 // Skill
 
 Skill::Skill(const string& i_name , int i_level)
