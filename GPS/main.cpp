@@ -70,3 +70,64 @@ void menu() noexcept
         }
     }
 }
+
+int main()
+{
+    cout << "Welcome to GPS\n";
+    while (true)
+    {
+        double lat { get_doubleNumber("Enter latitude (-90.0 to 90.0): ") };
+        double lon { get_doubleNumber("Enter longitude (-180.0 to 180.0): ") };
+        cout << "Enter location name: ";
+        string name;
+        getline(cin , name);
+        try
+        {
+            GPS gps(lat , lon , name);
+            while (true)
+            {
+                int choice { get_intNumber("Enter command number(enter 3 to see the command menu): ") };
+                try
+                {
+                    if (choice == 1)
+                    {
+                        gps.print();
+                    }
+                    else if (choice == 2)
+                    {
+                        double newLat { get_doubleNumber("Enter new latitude (-90.0 to 90.0): ") };
+                        double newLon { get_doubleNumber("Enter new longitude (-180.0 to 180.0): ") };
+                        cout << "Enter new location name: ";
+                        getline(cin, name);
+                        gps.update_location(newLat, newLon, name);
+                        cout << "Location updated successfully.\n";
+                    }
+                    else if (choice == 3)
+                    {
+                        menu();
+                    }
+                    else if (choice == 4)
+                    {
+                        cout << "Exiting program...\n";
+                        break;
+                    }
+                    else
+                    {
+                        cout << "Invalid choice! Please enter a integer number between 1 and 4.\n";
+                    }
+                }
+                catch (const invalid_argument& e)
+                {
+                    cout << "(ERROR)" << e.what() << '\n';
+                }
+            }
+            break;
+        }
+        catch (const invalid_argument& e)
+        {
+            cout << "(ERROR)" << e.what() << '\n' << "Try again.\n";
+        }
+    }
+
+    return 0;
+}
