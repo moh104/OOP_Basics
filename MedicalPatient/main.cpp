@@ -70,3 +70,57 @@ void menu() noexcept
         }
     }
 }
+
+int main()
+{
+    cout << "Welcome to HOSPITAL SYSTEM\n";
+    Hospital hospital;
+    while (true)
+    {
+        int choice { get_intNumber("Enter command number(enter 3 to see the command menu): ") };
+        try
+        {
+            switch(choice)
+            {
+                case 1:
+                {
+                    cout << "The patient's name: ";
+                    string name;
+                    getline(cin , name);
+                    int age { get_intNumber("Patient age: ") };
+                    double bodyTemperature { get_doubleNumber("The patient's body temperature(C):") };
+                    int heartRate { get_intNumber("The patient's heart rate(bpm): ") };
+                    int respiratoryRate { get_intNumber("The patient's respiratory rate: ") };
+                    int bloodPressure { get_intNumber("The patient's blood pressure: ") };
+                    hospital.add_patient(name, age, bodyTemperature, heartRate, respiratoryRate, bloodPressure);
+                    cout << "Patient added successfully.\n";
+                    break;
+                }
+
+                case 2:
+                    cout << "LIST OF PATIENTS\n";
+                    hospital.print();
+                    break;
+
+                case 3:
+                    menu();
+                    break;
+
+                case 4:
+                {
+                    cout << "Exit the program.\n";
+                    ofstream ofs("patients.dat");
+                    ofs.close();
+                    return 0;
+                }
+                
+                default:
+                    cout << "Invalid choice! Please enter a integer number between 1 and 4.\n";
+            }
+        }
+        catch(const invalid_argument& e)
+        {
+            cerr << "(ERROR) " << e.what() << '\n';
+        }
+    }
+}
